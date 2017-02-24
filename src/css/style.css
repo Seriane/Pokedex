@@ -1,0 +1,68 @@
+body {
+	background-image : url("../Images/main_wallpaper.jpg");
+	background-size : cover;
+}
+
+.home {
+	background-color : transparent;
+}
+
+
+
+
+@keyframes shine{
+  10% {
+    opacity: 1;
+    top: -30%;
+    left: -30%;
+    transition-property: left, top, opacity;
+    transition-duration: 0.7s, 0.7s, 0.15s;
+    transition-timing-function: ease;
+  }
+  100% {
+    opacity: 0;
+    top: -30%;
+    left: -30%;
+    transition-property: left, top, opacity;
+  }
+}
+@keyframes hover {
+	from {top : 0%;}
+	to {top : 5%;}
+}
+
+.pokedex {
+	position : relative;
+	animation : hover 3s linear infinite alternate;
+
+}
+
+.pokedex:hover {
+	cursor : pointer;
+}
+
+.logo img {
+	height: 25%;
+	width:35%;
+	
+
+
+}
+.toggle {
+
+	width:50px;
+	height:100%;
+	font-weight: bold;
+	/*left:100%;*/
+	background-color:black;
+}
+.menu {
+
+	background-color:white;
+	height:100%;
+}
+.result {
+	background-color: white;
+	width:71.8%;
+	opacity:0.9;
+}

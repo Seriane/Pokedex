@@ -1,16 +1,13 @@
 import React from "react";
 
-import Pokedex from "./Pokedex"
-import Soundtrack from "./Soundtrack"
-import Logo from "./Logo"
+import Main from "./Main";
+
 
 export default class Layout extends React.Component {
 	render() {
 		return (
 			<div>
-				<Logo />
-				<Pokedex />
-				<Soundtrack />
+			{this.props.children}
 			</div>
 			);
 	}

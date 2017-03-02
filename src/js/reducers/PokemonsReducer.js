@@ -60,6 +60,26 @@ export default function reducer(state={
 				error:action.payload}
 				break;
 		}
+
+
+		case "LIKE_POKEMONS" : {
+			return {...state, fetching:true}
+		}
+		case "LIKE_POKEMONS_FULFILLED" : {
+			
+			return {...state,
+				fetching:false,
+				fetched:true,
+				}
+				break;
+		}
+		case "LIKE_POKEMONS_ERROR" : {
+			return {...state,
+				fetching:false,
+				fetched:false,
+				error:action.payload}
+				break;
+		}
 		
 	}
 	return state;

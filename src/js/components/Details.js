@@ -45,7 +45,7 @@ export default class Details extends React.Component {
                         result[result.length - 1].states[pokemons[i].stat_name] = pokemons[i].base_stat;
 
                  }
-             this.props.dispatch(PokemonStats(result[0].id,result[0].types));    
+             //this.props.dispatch(PokemonStats(result[0].id,result[0].types));    
                 
 
                

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import { connect } from "react-redux";
-import { fetchPokemons } from "../actions/PokemonsActions";
+import { fetchPokemons, LikePokemons } from "../actions/PokemonsActions";
 
 @connect((store) => {
         return {
@@ -18,7 +18,11 @@ export default class ResultSearch extends React.Component {
         
                
         }
-
+        pokemonLike(id,like){
+                this.props.dispatch(LikePokemons(id,like));
+                this.forceUpdate();
+                this.props.dispatch(fetchPokemons()); 
+        }
 	render() {
                 if(this.props.pokemons) {
                 
@@ -59,11 +63,11 @@ export default class ResultSearch extends React.Component {
                                                         weight: {obj.weight}
                                                 </td>
                                                 <td>
-                                                        <button type="button" class="btn btn-default" aria-label="Left Align">
+                                                        <button type="button" class="btn btn-default" aria-label="Left Align" onClick={this.pokemonLike.bind(this,obj.id,true)}>
                                                                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                                                                 {obj.like}
                                                         </button>
-                                                        <button type="button" class="btn btn-default" aria-label="Left Align">
+                                                        <button type="button" class="btn btn-default" aria-label="Left Align" onClick={this.pokemonLike.bind(this,obj.id,false)}>
                                                                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
                                                                 {obj.dislike}
                                                         </button>

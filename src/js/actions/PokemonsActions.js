@@ -63,3 +63,17 @@ export function PokemonStats(pokeid,types){
 		})
 	}	
 }
+
+export function LikePokemons(pokeid,bool){
+	return function(dispatch) {
+	dispatch({type:"LIKE_POKEMONS"});
+	console.log("URL: "+"http://localhost:3000/like?id="+pokeid+"&bool="+bool);
+			axios.get("http://localhost:3000/like?id="+pokeid+"&bool="+bool).then((response) => {
+				if(response){	
+					dispatch({type:"LIKE_POKEMONS_FULFILLED",payload:response.data});
+				}
+		}).catch((err) => {
+				dispatch({type:"LIKE_POKEMONS_ERROR",payload:err})
+		})
+	}	
+}

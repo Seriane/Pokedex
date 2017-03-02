@@ -1,6 +1,6 @@
 
 
-export default Class Pokemon {
+export default class Pokemon {
 	
 	
 

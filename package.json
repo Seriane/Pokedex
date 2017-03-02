@@ -4,7 +4,7 @@
   "description": "dictionnary of pokemons",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "node src/server.js \n webpack-dev-server --content-base src --inline --hot",
+    "dev": "node src/server.js& \n webpack-dev-server --content-base src --inline --hot",
     "elastic": "../elasticsearch/bin/elasticsearch&\n cd ../elasticsearch-head/ \n grunt server& \n",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

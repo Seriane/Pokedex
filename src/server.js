@@ -40,29 +40,28 @@ app.get('/search', function(req, res){
 console.log(req.query);
 //by name
 	if(req.query.name)
-  		connection.query('select pokemon.*, types.identifier as types from types,pokemon, pokemon_types where pokemon.id = pokemon_types.pokemon_id and types.id = pokemon_types.type_id and pokemon.id <= 721 and pokemon.identifier like \'%'+req.query.name+'%\'',function (error, results, fields) {
-  		if (error) throw error;
+  		connection.query('select pokemon.*, types.identifier as types from types,pokemon, pokemon_types where pokemon.id = pokemon_types.pokemon_id and types.id = pokemon_types.type_id and pokemon.id <= 721 and pokemon.identifier like ?',["%"+req.query.name+"%"],function (error, results, fields) {
   			res.send(results);
 });
   	if(req.query.id)
-  		connection.query('SELECT distinct pokemon.*, types.identifier AS types, stats.identifier as stat_name, pokemon_stats.base_stat FROM types, pokemon, pokemon_types, stats, pokemon_stats WHERE pokemon.id = pokemon_types.pokemon_id AND types.id = pokemon_types.type_id AND pokemon.id <= 721 AND stats.id = pokemon_stats.stat_id AND pokemon.id = pokemon_stats.pokemon_id AND pokemon.id ='+req.query.id,function (error, results, fields) {
+  		connection.query('SELECT distinct pokemon.*, types.identifier AS types, stats.identifier as stat_name, pokemon_stats.base_stat FROM types, pokemon, pokemon_types, stats, pokemon_stats WHERE pokemon.id = pokemon_types.pokemon_id AND types.id = pokemon_types.type_id AND pokemon.id <= 721 AND stats.id = pokemon_stats.stat_id AND pokemon.id = pokemon_stats.pokemon_id AND pokemon.id = ?',[req.query.id],function (error, results, fields) {
   			if (error) throw error;
   				res.send(results);
 });
 
 });
-
+//NOT IMPLEMENTED YET
 app.get('/compare',function(req, res){
-	var stat_rank=[];
-	connection.query("SELECT stats.identifier,pokemon_stats.base_stat FROM stats,pokemon_stats,pokemon WHERE pokemon.id=pokemon_stats.pokemon_id AND stats.id=pokemon_stats.stat_id AND pokemon.id="+req.query.id,function(error,results,fields){
+/*	var stat_rank=[];
+	connection.query("SELECT stats.identifier,pokemon_stats.base_stat FROM stats,pokemon_stats,pokemon WHERE pokemon.id=pokemon_stats.pokemon_id AND stats.id=pokemon_stats.stat_id AND pokemon.id= ?",[req.query.id],function(error,results,fields){
 		
 		results.forEach((identifier) => {
 				var types=req.query.types.split(",");
 				
 				types.forEach((type)=> {
 	
-					connection.query("SELECT COUNT(pokemon.id) as count FROM pokemon, pokemon_stats,stats,types,pokemon_types WHERE pokemon.id=pokemon_stats.pokemon_id AND pokemon.id=pokemon_types.pokemon_id AND pokemon_types.type_id=types.id AND pokemon_stats.stat_id=stats.id AND types.identifer like '"+type+"' AND pokemon.id="+req.query.id+" AND pokemon_stats.base_stat>"+identifier.base_stat,function(err,r,f){
-						res.send({"type":type,"rank":r,"stat":identifier.identifier});
+					connection.query("SELECT COUNT(pokemon.id) as count FROM pokemon, pokemon_stats,stats,types,pokemon_types WHERE pokemon.id=pokemon_stats.pokemon_id AND pokemon.id=pokemon_types.pokemon_id AND pokemon_types.type_id=types.id AND pokemon_stats.stat_id=stats.id AND types.identifer like  ? AND pokemon.id= ? AND pokemon_stats.base_stat> ?",[type,req.query.id,identifier.base_stat],function(err,r,f){
+						//res.send({"type":type,"rank":r,"stat":identifier.identifier});
 						//console.log(stat_rank);
 					});
 					
@@ -75,9 +74,17 @@ app.get('/compare',function(req, res){
 	});
 	
 	//connection.query(("SELECT COUNT() FROM pokedata.pokemon, pokemon_stats, pokemon_types,types WHERE pokemon_types.type_id = types.id AND pokemon_types.pokemon_id = pokemon.id AND types.identifier like '%"+res.query.types+"%' AND pokemon.id = pokemon_stats.pokemon_id AND pokemon_stats.stat_id="+req.query.stat_id+" AND base_stat>"+req.query.value+" order by base_stat asc;"))
-
+*/
+res.end();
 });
-
+app.get("/like",function(req,res) {
+	console.log(req.query);
+	if(req.query.bool=="true")
+		connection.query("UPDATE `pokemon` SET `like`=`like`+1 WHERE `id`=?",[req.query.id],(err,res,f) => {console.log(err)});
+	else
+		connection.query("UPDATE `pokemon` SET `dislike`=`dislike`+1 WHERE `id`=?",[req.query.id],(err,res,f) => {console.log("ici"+err)});
+	res.end();
+});
 io.sockets.on('connection', function (socket) {
 	console.log("here");
 	socket.on("tweets",function(name) {

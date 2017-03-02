@@ -5,8 +5,11 @@
 GENERATE DATABASE USING THE SCRIPT: script.sql
 
 the data was taken from pokeapi github: https://github.com/PokeAPI/pokeapi
+
 commands:
+	 npm install
 	 npm run dev : to start webpack server + REST API.
+	 localhost:8080
 
 Technologies:
 	nodejs
